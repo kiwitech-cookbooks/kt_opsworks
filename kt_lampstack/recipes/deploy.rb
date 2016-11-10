@@ -15,7 +15,7 @@ git '/home/ubuntu/phpsysinfo' do
 #  ssh_wrapper '/home/ubuntu/sshkey_setup.sh'
 end
 
-cookbook_file "/home/ubuntu/deploy.sh"do
+cookbook_file "/home/ubuntu/deploy.sh" do
   source "deploy.sh"
   mode "0777"
 end

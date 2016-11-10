@@ -1,2 +1,3 @@
 default["kt_lampstack"]["sites"]["example.com"] = { "port" => 80, "servername" => "example.com", "serveradmin" => "guddu.khan@example.com" }
+default["kt_lampstack"]["jenkins_pubkey"] = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDrROAMQMBdUnm4pRPwQtUNe4rfdPeWl7rPg8980+gh8FBmXQ9/83GZQ+D4ZLS+rW7S9rZGqxZHApnrWtcsIBLmPDUIFZBCdpkCP3pdU2TbsgS2dW+9YDYsVj94ojBoSgF+/23414q5T2NT5iwHkmBpOVmXrzDpkoOrFfsil6LKsWPGFIQ+XQpcHYzL1iJEsflGw9LNr9WzOavhkcyMmR2VUIh4TKkkki+EbTZWqgE5nYWilh+/nZubMUR8EewhvjKSCLYyGiMYytGRdTuCY2Z83V9IfYk9lmMI9sTeUDJfugvLmw3Q8zo5RhdplIngXPDGtn4fAaqUxk88I2/JUUTL jenkins@jenkins-kiwi-test"
 #default["lampstack"]["sites"]["example.org"] = { "port" => 80, "servername" => "example.org", "serveradmin" => "guddu.khan@example.org" }
