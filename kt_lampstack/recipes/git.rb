@@ -9,35 +9,28 @@ end
 #end
 
 # Copy private key to .ssh directory
-cookbook_file "/home/ubuntu/.ssh/sshkey" do
-  source "sshkey"
-  mode "0600"
+#cookbook_file "/home/ubuntu/.ssh/sshkey" do
+#  source "sshkey"
+#  mode "0600"
+#end
+execute "Generate SSH keypair" do
+  command "ssh-keygen -qt rsa -N '' -f /home/ubuntu/.ssh/id_rsa"
 end
 
-# Create ssh configuration script
-cookbook_file "/home/ubuntu/sshkey_setup.sh"do
-  source "sshkey_setup.sh"
-  mode "0777"
+execute "STDOUT id_rsa.pub" do
+  command "echo 'Don't forget to add below key as Github repo's Deploy-key (RO)'"
+  command "cat /home/ubuntu/.ssh/id_rsa.pub"
 end
+execute "Authorized Jenkins server pubkey" do
+  command "cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys"
+end
+#cookbook_file "/home/ubuntu/sshkey_setup.sh"do
+#  source "sshkey_setup.sh"
+#  mode "0777"
+#end
 
 # Run ssh configuration script
 #execute "setup sshkey config" do
 #  command "sh /home/ubuntu/sshkey_setup.sh"
 #end
 
-# Create directory
-directory '/home/ubuntu/phpsysinfo' do
-  owner 'ubuntu'
-  group 'ubuntu'
-  recursive true
-end
-
-# Clone repository
-git '/home/ubuntu/phpsysinfo' do
-  repository 'git://github.com/guddukhan1987/phpsysinfo.git'
-  revision 'master'
-  action :checkout
-  user 'ubuntu'
-  group 'ubuntu'
-  ssh_wrapper '/home/ubuntu/sshkey_setup.sh'
-end

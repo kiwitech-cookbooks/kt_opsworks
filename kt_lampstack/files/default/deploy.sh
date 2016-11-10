@@ -1,12 +1,12 @@
 #!/bin/bash
 
-cd /home/kiwitech/phpsysinfo
+cd /home/ubuntu/phpsysinfo
 
 git pull origin master
 
-PORTAL_PATH="/var/www/html/example.com"
+PORTAL_PATH="/var/www/html/example.com/"
 
-sudo rsync -avz /home/kiwitech/phpsysinfo/* $PORTAL_PATH
+sudo rsync -avz * $PORTAL_PATH
 #sudo cp -rf .htaccess $PORTAL_PATH;
 
 sudo find $PORTAL_PATH -type d -exec chmod 755 {} \;
