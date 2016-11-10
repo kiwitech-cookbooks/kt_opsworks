@@ -14,7 +14,7 @@ end
 #  mode "0600"
 #end
 execute "Generate SSH keypair" do
-  command "echo -e 'y\n'| ssh-keygen -qt rsa -N '' -f /home/ubuntu/.ssh/id_rsa"
+  command "echo -e 'y'| ssh-keygen -qt rsa -N '' -f /home/ubuntu/.ssh/id_rsa"
 end
 
 execute "STDOUT id_rsa.pub" do
