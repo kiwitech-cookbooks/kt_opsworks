@@ -7,7 +7,7 @@ end
 
 # Clone repository
 git '/home/ubuntu/phpsysinfo' do
-  repository 'git://github.com/guddukhan1987/phpsysinfo.git'
+  repository 'https://github.com/guddukhan1987/phpsysinfo.git'
   revision 'master'
   action :checkout
   user 'ubuntu'
