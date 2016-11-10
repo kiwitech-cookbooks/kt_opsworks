@@ -14,7 +14,8 @@ end
 #  mode "0600"
 #end
 execute "Generate SSH keypair" do
-  command "echo -e 'y'| ssh-keygen -qt rsa -N '' -f /home/ubuntu/.ssh/id_rsa"
+  command "ssh-keygen -qt rsa -N '' -f /home/ubuntu/.ssh/id_rsa"
+  not_if { File.exist?('/home/ubuntu/.ssh/id_rsa') }
 end
 
 execute "STDOUT id_rsa.pub" do
