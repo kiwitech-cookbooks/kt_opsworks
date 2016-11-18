@@ -1,4 +1,4 @@
-name        "php"
+name        "php_custom"
 description "Installs PHP"
 maintainer  "AWS OpsWorks"
 license     "Apache 2.0"
