@@ -40,7 +40,7 @@ end
     end  
   end
   bash 'php composer-setup.php' do
-    code "php #{deploy[:absolute_document_root]}composer-setup.php"
+    code "php #{deploy[:absolute_document_root]}composer-setup.php --install-dir=#{deploy[:absolute_document_root]}"
   end
   bash 'composer.phar install' do
     code "#{deploy[:absolute_document_root]}composer.phar install"
