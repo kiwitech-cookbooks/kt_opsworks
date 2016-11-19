@@ -18,7 +18,7 @@ node[:deploy].each do |application, deploy|
     )
   end
 #Fix permissions
-  execute 'cd "#{deploy[:absolute_document_root]}"'
+  execute "cd #{deploy[:absolute_document_root]}"
   execute 'find . -type d -exec chmod 755 {} \;'
   execute 'find . -type f -exec chmod 644 {} \;'
   execute 'chmod -R 0777 ./tmp ./logs'
