@@ -40,10 +40,10 @@ end
     end  
   end
   bash 'php composer-setup.php' do
-    code "php composer-setup.php"
+    code "php #{deploy[:absolute_document_root]}/composer-setup.php"
   end
   bash './composer.phar install' do
-    code "./composer.phar install"
+    code "#{deploy[:absolute_document_root]}/composer.phar install"
     only_if do
       File.exists?("deploy[:absolute_document_root]}/composer.lock") 
     end
