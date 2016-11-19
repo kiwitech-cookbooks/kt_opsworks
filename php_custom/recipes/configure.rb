@@ -18,20 +18,7 @@ node[:deploy].each do |application, deploy|
     )
   end
 
-bash 'Fix permissions' do
-  code <<-EOH
-    su - #{deploy[:user]}
-    cd #{deploy[:absolute_document_root]} 
-    find . -type d -exec chmod 755 {} \\;
-    find . -type f -exec chmod 644 {} \\;
-    chmod -R 0777 ./tmp ./logs
-    EOH
-  only_if do
-    File.exists?("#{deploy[:absolute_document_root]}")
-  end
-end
-
-#Install composer and run composer.phar install 
+#Install composer 
   cookbook_file "#{deploy[:absolute_document_root]}composer-setup.php" do
     source 'composer-setup.php'
     mode '0755'
@@ -39,13 +26,25 @@ end
     group deploy[:group]
     not_if do
       File.exists?("#{deploy[:absolute_document_root]}composer-setup.php")
-    end  
+    end
   end
-  bash 'php composer-setup.php' do
-    code "php ./composer-setup.php --install-dir=."
+
+bash 'Fix permissions' do
+  code <<-EOH
+    su - #{deploy[:user]}
+    cd #{deploy[:absolute_document_root]} 
+    find . -type d -exec chmod 755 {} \\;
+    find . -type f -exec chmod 644 {} \\;
+    chmod -R 0777 ./tmp ./logs
+    php ./composer-setup.php
+    EOH
+  only_if do
+    File.exists?("#{deploy[:absolute_document_root]}")
   end
+end
+
   bash 'composer.phar install' do
-    code "./composer.phar install"
+    code "#{deploy[:absolute_document_root]}composer.phar install"
     only_if do
       File.exists?("#{deploy[:absolute_document_root]}composer.lock") 
     end
