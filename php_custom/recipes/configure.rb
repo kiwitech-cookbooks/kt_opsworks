@@ -20,10 +20,9 @@ node[:deploy].each do |application, deploy|
 
 bash 'Fix permissions' do
   code <<-EOH
-    cd #{deploy[:absolute_document_root]}
-    find . -type d -exec chmod 755 {} /\;
-    find . -type f -exec chmod 644 {} /\;
-    chmod -R 0777 ./tmp ./logs
+    find #{deploy[:absolute_document_root]} -type d -exec chmod 755 {} \\;
+    find #{deploy[:absolute_document_root]} -type f -exec chmod 644 {} \\;
+    chmod -R 0777 #{deploy[:absolute_document_root]}/tmp #{deploy[:absolute_document_root]}/logs
     EOH
   only_if do
     File.exists?("#{deploy[:absolute_document_root]}")
