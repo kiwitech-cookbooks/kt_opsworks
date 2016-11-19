@@ -1,5 +1,0 @@
-name        "php_deploy"
-description "Run deploy.sh"
-maintainer  "AWS OpsWorks"
-license     "Apache 2.0"
-version     "1.0.0"
