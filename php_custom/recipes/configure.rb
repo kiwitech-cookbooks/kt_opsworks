@@ -20,9 +20,11 @@ node[:deploy].each do |application, deploy|
 
 bash 'Fix permissions' do
   code <<-EOH
-    find #{deploy[:absolute_document_root]} -type d -exec chmod 755 {} \\;
-    find #{deploy[:absolute_document_root]} -type f -exec chmod 644 {} \\;
-    chmod -R 0777 #{deploy[:absolute_document_root]}tmp #{deploy[:absolute_document_root]}logs
+    su - #{deploy[:user]}
+    cd #{deploy[:absolute_document_root]} 
+    find . -type d -exec chmod 755 {} \\;
+    find . -type f -exec chmod 644 {} \\;
+    chmod -R 0777 ./tmp ./logs
     EOH
   only_if do
     File.exists?("#{deploy[:absolute_document_root]}")
@@ -40,10 +42,10 @@ end
     end  
   end
   bash 'php composer-setup.php' do
-    code "php #{deploy[:absolute_document_root]}composer-setup.php --install-dir=#{deploy[:absolute_document_root]}"
+    code "php ./composer-setup.php --install-dir=."
   end
   bash 'composer.phar install' do
-    code "#{deploy[:absolute_document_root]}composer.phar install"
+    code "./composer.phar install"
     only_if do
       File.exists?("#{deploy[:absolute_document_root]}composer.lock") 
     end
