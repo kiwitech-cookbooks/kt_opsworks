@@ -16,8 +16,5 @@ node[:deploy].each do |application, deploy|
       :layers => node[:opsworks][:layers],
       :stack_name => node[:opsworks][:stack][:name]
     )
-    only_if do
-      File.exists?("#{default[:deploy][application][:absolute_document_root]}/config")
-    end
   end
 end
