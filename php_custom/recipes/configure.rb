@@ -5,7 +5,7 @@ node[:deploy].each do |application, deploy|
   end
 
   # write out app.php in to the app
-  template "#{default[:deploy][application][:absolute_document_root]}/config/app.php" do
+  template "#{deploy[:absolute_document_root]}/config/app.php" do
     source 'app.php.erb'
     mode '0660'
     owner deploy[:user]
