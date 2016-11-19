@@ -43,11 +43,11 @@ bash 'Fix permissions' do
   end
 end
 
-bash 'composer.phar install' do
+  bash 'composer.phar install' do
     code <<-EOH 
       su - #{deploy[:user]}
       cd #{deploy[:absolute_document_root]}      
-      ./composer.phar install"
+      ./composer.phar install
       EOH
     only_if do
       File.exists?("#{deploy[:absolute_document_root]}composer.lock") 
