@@ -17,11 +17,18 @@ node[:deploy].each do |application, deploy|
       :stack_name => node[:opsworks][:stack][:name]
     )
   end
-#Fix permissions
-  execute "cd #{deploy[:absolute_document_root]}"
-  execute 'find . -type d -exec chmod 755 {} \;'
-  execute 'find . -type f -exec chmod 644 {} \;'
-  execute 'chmod -R 0777 ./tmp ./logs'
+
+bash 'Fix permissions' do
+  code <<-EOH
+    cd #{deploy[:absolute_document_root]}
+    find . -type d -exec chmod 755 {} \;
+    find . -type f -exec chmod 644 {} \;
+    chmod -R 0777 ./tmp ./logs
+    EOH
+  only_if do
+    File.exists?("#{deploy[:absolute_document_root]}")
+  end
+end
 
 #Install composer and run composer.phar install 
   cookbook_file "#{deploy[:absolute_document_root]}/composer-setup.php" do
@@ -31,10 +38,15 @@ node[:deploy].each do |application, deploy|
     group deploy[:group]
     not_if do
       File.exists?("#{deploy[:absolute_document_root]}/composer-setup.php")
+    end  
+  end
+  bash 'php composer-setup.php' do
+    code "php composer-setup.php"
+  end
+  bash './composer.phar install' do
+    code "./composer.phar install"
+    only_if do
+      File.exists?("deploy[:absolute_document_root]}/composer.lock") 
     end
-  end
-  execute 'php composer-setup.php' do
-  end
-  execute './composer.phar install' do
   end
 end
